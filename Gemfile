@@ -6,7 +6,15 @@ group :production do
 gem 'pg'
 gem 'rails_12factor'
 end
-gem 'rvm-capistrano'
+gem 'capistrano-rvm'
+
+group :development do
+  gem 'capistrano', '~> 3.1.0'
+  # cap tasks to manage puma application server
+  gem 'capistrano-puma', require: false
+  gem 'capistrano-rails',   '~> 1.1', require: false
+  gem 'capistrano-bundler', '~> 1.1', require: false
+end
 #gem 'spree_product_translations'
 group :assets do
 gem 'sass-rails', '~> 4.0.0'

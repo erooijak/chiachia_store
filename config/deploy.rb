@@ -1,60 +1,42 @@
-require 'bundler/capistrano'
-require 'rvm/capistrano'
+require 'capistrano'
 
-load 'deploy/assets'
+set :stages, ["staging", "production"]
+set :default_stage, "staging"
 
-# Mogelijk trucjes
-ssh_options[:forward_agent] = true
-#set :linked_dirs, %w(public/spree)
+set :application, 'chiachia_store'                       	# application name
+set :repo_url, 'git@github.com:erooijak/chiachia_store.git'   # your repo url
+set :deploy_to, '/home/erooijak/chiachia.erooijak.simple-webhosting.eu'
+set :user, "root"
 
-#Trucje twee voor DB
-set :normalize_asset_timestamps, false
+set :scm, :git
 
-# De naam van uw chiachiastore
-set :application, "chiachiastore"
-
-# Gegevens van de Bluerail server
-set :host, "mushu.bluerail.nl"
-set :user, "chiachia"
-
-# Versiebeheer instellingen
-set :scm, :git  # Of 'subversion', 'mercurial' , etc.
-set :repository,  "https://github.com/erooijak/chiachia_store"
-
-# Gebruik de standaard Ruby van de server
-set :rvm_ruby_string, 'default'
-
-# De onderstaande instellingen zijn specifiek voor de Bluerail servers, u
-# hoeft hier zelf geen wijzigingen in aan te brengen.
-set :deploy_to, lambda { capture("echo -n ~/rails") }
-set :rvm_type, :system
-set :rvm_bin_path, '/usr/local/rvm/bin'
-set :use_sudo, false
+set :branch, 'master'
 set :keep_releases, 5
-after "deploy:update", "deploy:cleanup"
 
-# Bij rvm-capistrano v1.3.0 of hoger dient de volgende regel toegevoegd te worden.
-set :rvm_path, '/usr/local/rvm'
+ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-role :web, host
-role :app, host
-role :db,  host, :primary => true
+set :format, :pretty
+set :log_level, :debug
+set :pty, true
 
-# Taak voor het herstarten van de Passenger chiachiastore en symlinken van de database.yml
-namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :symlink_shared do
-  	 run "ln -nfs #{shared_path}/shared/spree/ #{release_path}/public/spree/""
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-  after "deploy:update_code", :link_production_db
-end
+set :stage, :production
+ 
+role :app, %w{root@213.159.6.126}
+role :web, %w{root@213.159.6.126}
+role :db,  %w{root@213.159.6.126}
 
-desc "Link database.yml from shared path"
-task :link_production_db do
-  run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
-end
-
+set :puma_rackup, -> { File.join(current_path, 'config.ru') }
+set :puma_state, "#{shared_path}/tmp/pids/puma.state"
+set :puma_pid, "#{shared_path}/tmp/pids/puma.pid"
+set :puma_bind, "unix://#{shared_path}/tmp/sockets/puma.sock"
+set :puma_conf, "#{shared_path}/puma.rb"
+set :puma_access_log, "#{shared_path}/log/puma_error.log"
+set :puma_error_log, "#{shared_path}/log/puma_access.log"
+set :puma_role, :app
+set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
+set :puma_threads, [0, 16]
+set :puma_workers, 0
+set :puma_init_active_record, true
+set :puma_preload_app, true
