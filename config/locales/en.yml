@@ -1,0 +1,28 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  spree:
+    hello: "Hello world"
+    home: "Home"
+    about: "About us"
+    contact: "Contact"
+    landing: "Welcome"
+    shop: "Products"
+    location: "Europe"
+    address: "Address"
+    telephone: "Telephone"
+
+    humanbeing1function: "Senior Production Consultant"
+    humanbeing2function: "Interdepartmental Manager of Trust and Securities"
+    humanbeing2functiondescription: "I recently started working at Chia Chia! and my job is to make sure that the employees can relax while they work. They can always count on me for a good conversation or advice and are free to open up their hearts to me. In addition to my work at the wonderful Chia Chia! Company I study medicine and I have succesfully completed an advanced first aid course. My presence at Chia Chia! therefore ensures that people are in safe hands in the unlikely case of an emergency."
+    humanbeing3function: "Medior Ethical Expert / Conceptual Designer"
+    humanbeing4function: "Accountant"
+    humanbeing5function: "President and CEO"
+    humanbeing6function: "Sales Manager / Senior Marketing Specialist"
+    humanbeing6functiondesscription: "I love to sell."
+    humanbeing7function: "Face-to-Face Brand Manager"
+
+    bxslider2: "Chia seeds are an ancient super food that has been used by the Mayans, Aztecs and Incas. In fact, Chia means 'strength' in the language of the Mayans, and was considered running food because messengers could run all day with the help of these tiny seeds. Source: Natural Health News & Scientific Discoveries"
+    bxslider1: "The logo of Chia Chia! has its roots in the Aztec rabbit Tochtli. Tochtli signifies a religious attitude and experiences of self-transcendence."
+    bxslider3: "Soon a brand new flavour will be added to the Chia Chia! Line: The Chia Chia! Maria."

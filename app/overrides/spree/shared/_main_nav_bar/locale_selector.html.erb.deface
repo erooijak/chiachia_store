@@ -1,0 +1,12 @@
+<% if SpreeI18n::Config.supported_locales.size > 1 %>
+  <div id="locale-select" style="float: right; margin-right: 10px;" data-hook>
+    <%= form_tag(set_locale_path) do %>
+      <%= select_tag(:locale, options_for_select(supported_locales_options, I18n.locale),
+                     :data => { :href => set_locale_path },
+                     :class => "form-control") %>
+      <noscript>
+        <%= submit_tag %>
+      </noscript>
+    <% end %>
+  </div>
+<% end %>
