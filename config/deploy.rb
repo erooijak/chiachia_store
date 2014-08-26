@@ -1,4 +1,4 @@
-require 'capistrano'
+require "capistrano"
 
 set :stages, ["staging", "production"]
 set :default_stage, "staging"
@@ -61,12 +61,13 @@ namespace :deploy do
   after :restart, :copy_databaseyml
 
   after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
+    # on roles(:app) do
+    #   within "#{current_path}" do
+    #     with rails_env: :production do
+    #       execute :rake, "bundle install"
+    #     end
+    #   end
+    # end
   end
 
 end
