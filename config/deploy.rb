@@ -13,10 +13,8 @@ set :scm, :git
 set :branch, 'master'
 set :keep_releases, 5
 
-ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
-
 set :format, :pretty
-set :log_level, :info
+set :log_level, :debug
 set :pty, true
 
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/sitemaps}
@@ -43,15 +41,24 @@ set :puma_preload_app, true
 
 namespace :deploy do
 
-  desc 'Restart application'
+  desc 'Restart application...'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
+
+  desc 'Copy database.yml to correct location.'
+  task :copy_databaseyml do
+  	on roles(:app) do
+      execute :cp ,'-r', shared_path.join('config/database.yml'), release_path.join('config/database.yml')
     end
   end
 
   after :publishing, :restart
+  
+  after :restart, :copy_databaseyml
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -63,10 +70,3 @@ namespace :deploy do
   end
 
 end
-
-# namespace :deploy do
-#   desc "Symlinks the database.yml"
-#   task :symlink_db, :roles => :app do
-#     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
-#   end
-# end
