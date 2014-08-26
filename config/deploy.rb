@@ -11,7 +11,7 @@ set :user, "root"
 set :scm, :git
 
 set :branch, 'master'
-set :keep_releases, 3
+set :keep_releases, 5
 
 set :format, :pretty
 set :log_level, :debug
