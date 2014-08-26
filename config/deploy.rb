@@ -17,7 +17,7 @@ set :format, :pretty
 set :log_level, :debug
 set :pty, true
 
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/sitemaps}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle}
 
 set :stage, :production
  
