@@ -3,15 +3,15 @@ require 'capistrano'
 set :stages, ["staging", "production"]
 set :default_stage, "staging"
 
-set :application, 'chiachia_store'                       	# application name
-set :repo_url, 'git@github.com:erooijak/chiachia_store.git'   # your repo url
+set :application, 'chiachia_store'                       
+set :repo_url, 'git@github.com:erooijak/chiachia_store.git'  
 set :deploy_to, '/home/erooijak/chiachia.erooijak.simple-webhosting.eu'
 set :user, "root"
 
 set :scm, :git
 
 set :branch, 'master'
-set :keep_releases, 5
+set :keep_releases, 3
 
 set :format, :pretty
 set :log_level, :debug
