@@ -6,10 +6,10 @@ group :production do
 gem 'pg'
 gem 'rails_12factor'
 end
-gem 'capistrano-rvm'
 
 group :development do
   gem 'capistrano', '~> 3.1.0'
+  gem 'capistrano-rvm'
   # cap tasks to manage puma application server
   gem 'capistrano-puma', require: false
   gem 'capistrano-rails',   '~> 1.1', require: false

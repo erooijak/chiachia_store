@@ -64,32 +64,9 @@ namespace :deploy do
 
 end
 
-# To install Apache 2 development headers:
-#    Please install it with apt-get install apache2-threaded-dev
-
-#  * To install Apache Portable Runtime (APR) development headers:
-#    Please install it with apt-get install libapr1-dev
-
-#  * To install Apache Portable Runtime Utility (APU) development headers:
-#    Please install it with apt-get install libaprutil1-dev
-
-# Your system does not have a lot of virtual memory
-
-# Compiling Phusion Passenger works best when you have at least 1024 MB of virtual
-# memory. However your system only has 192 MB of total virtual memory (64 MB
-# RAM, 128 MB swap). It is recommended that you temporarily add more swap space
-# before proceeding. You can do it as follows:
-
-#   sudo dd if=/dev/zero of=/swap bs=1M count=1024
-#   sudo mkswap /swap
-#   sudo swapon /swap
-
-
-# If you cannot activate a swap file (e.g. because you're on OpenVZ, or if you
-# don't have root privileges) then you should install Phusion Passenger through
-# DEB/RPM packages. For more information, please refer to the manual, section
-# "Installation":
-
-#   /usr/local/rvm/gems/ruby-2.1.2/gems/passenger-4.0.49/doc/Users guide Apache.html
-#   https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html
-
+# namespace :deploy do
+#   desc "Symlinks the database.yml"
+#   task :symlink_db, :roles => :app do
+#     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+#   end
+# end
