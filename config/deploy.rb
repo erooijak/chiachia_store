@@ -16,10 +16,10 @@ set :keep_releases, 5
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 set :format, :pretty
-set :log_level, :debug
+set :log_level, :info
 set :pty, true
 
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/sitemaps}
 
 set :stage, :production
  
@@ -40,3 +40,56 @@ set :puma_threads, [0, 16]
 set :puma_workers, 0
 set :puma_init_active_record, true
 set :puma_preload_app, true
+
+namespace :deploy do
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      # execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
+
+  after :publishing, :restart
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
+  end
+
+end
+
+# To install Apache 2 development headers:
+#    Please install it with apt-get install apache2-threaded-dev
+
+#  * To install Apache Portable Runtime (APR) development headers:
+#    Please install it with apt-get install libapr1-dev
+
+#  * To install Apache Portable Runtime Utility (APU) development headers:
+#    Please install it with apt-get install libaprutil1-dev
+
+# Your system does not have a lot of virtual memory
+
+# Compiling Phusion Passenger works best when you have at least 1024 MB of virtual
+# memory. However your system only has 192 MB of total virtual memory (64 MB
+# RAM, 128 MB swap). It is recommended that you temporarily add more swap space
+# before proceeding. You can do it as follows:
+
+#   sudo dd if=/dev/zero of=/swap bs=1M count=1024
+#   sudo mkswap /swap
+#   sudo swapon /swap
+
+
+# If you cannot activate a swap file (e.g. because you're on OpenVZ, or if you
+# don't have root privileges) then you should install Phusion Passenger through
+# DEB/RPM packages. For more information, please refer to the manual, section
+# "Installation":
+
+#   /usr/local/rvm/gems/ruby-2.1.2/gems/passenger-4.0.49/doc/Users guide Apache.html
+#   https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html
+
