@@ -11,7 +11,7 @@ group :development do
   gem 'capistrano', '~> 3.1.0'
   gem 'capistrano-rvm'
   # cap tasks to manage puma application server
-  gem 'capistrano-puma'
+  # gem 'capistrano-puma'
   gem 'capistrano-rails',   '~> 1.1'
   gem 'capistrano-bundler', '~> 1.1'
 end
@@ -31,3 +31,7 @@ gem 'devise-encryptable'
 # SpreeI18n::Config.available_locales = [:en, :'nl-NL']
 # SpreeI18n::Config.supported_locales = [:en, :'nl-NL']
 gem 'spree_bootstrap_frontend', github: '200Creative/spree_bootstrap_frontend', branch: '2-1-stable'
+
+# LoadModule passenger_module /usr/lib/apache2/modules/mod_passenger.so
+# PassengerRoot /usr/local/rvm/gems/ruby-1.9.3-p547/gems/passenger-4.0.49
+# PassengerRuby /usr/bin/ruby
